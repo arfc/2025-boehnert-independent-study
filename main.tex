@@ -1,0 +1,47 @@
+% Document template for ANS Journals
+% Options: footnoteAtEnd - Places all footnotes at the end of document
+%               Usage: \documentclass[footnoteAtEnd]{style/nseJournal}
+\documentclass{style/nseJournal}
+
+% tikz %
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows, decorations, shapes}
+
+\usetikzlibrary{shapes.geometric,arrows}
+\tikzstyle{process} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=blue!30]
+\tikzstyle{object} = [ellipse, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\usepackage[acronym,toc]{glossaries}
+\include{acros}
+
+\begin{document}
+
+\title{{\LaTeX} Template for Submissions to \\American Nuclear Society Journals} %title of paper
+
+\input{authors}
+
+% Add keywords to appear in Abstract in the order they should appear
+\addKeyword{ANS journal guidelines}
+\addKeyword{ANS submission template}
+\addKeyword{ANS bibliography style}
+
+\titlePage
+
+\input{abstract}
+
+\input{1-introduction}
+\input{2-methods}
+\input{3-results}
+\input{4-conclusion}
+
+\pagebreak
+\input{acks}
+
+\pagebreak
+\bibliographystyle{style/ans_js}                                                                           %custom ANS journal submission template bibliography style
+\bibliography{bibliography}
+
+\end{document}
+
+
