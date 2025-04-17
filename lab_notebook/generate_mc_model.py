@@ -48,6 +48,14 @@ geometry = openmc.Geometry([pincell_bounded], merge_surfaces=True)
 geometry.export_to_xml()
 
 ###############################################################################
+# Create tallies for the model
+
+tally = openmc.Tally()
+tally.Fil
+
+
+
+###############################################################################
 # Create a plot to visualize the geometry
 
 plot = openmc.Plot()
