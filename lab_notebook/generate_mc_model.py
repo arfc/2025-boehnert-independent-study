@@ -50,9 +50,19 @@ geometry.export_to_xml()
 ###############################################################################
 # Create tallies for the model
 
-tally = openmc.Tally()
-tally.Fil
+# Distribcell filter for checking out the pincells. We use a DistribcellFilter
+# to tally duplicated cells that are in a lattice.
+distribcell_filter = openmc.DistribcellFilter(fuel_cell)
 
+# Tally to count the fission rate in the fuel
+tally = openmc.Tally(name='flux')
+tally.filters = [distribcell_filter]
+tally.scores = ['flux']
+
+# TODO: Create tallys for the flux in the water cells
+
+tallies = openmc.Tallies([tally])
+tallies.export_to_xml()
 
 
 ###############################################################################
@@ -75,6 +85,8 @@ plots.export_to_xml()
 
 ###############################################################################
 # Create settings for the problem
+
+# TODO: Change the settings file to run an eigenvalue simulation
 settings = openmc.Settings()
 settings.run_mode = 'plot'
 settings.export_to_xml()
