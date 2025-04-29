@@ -52,16 +52,27 @@ geometry.export_to_xml()
 
 # Distribcell filter for checking out the pincells. We use a DistribcellFilter
 # to tally duplicated cells that are in a lattice.
-distribcell_filter = openmc.DistribcellFilter(fuel_cell)
+distribcell_filter_fuel = openmc.DistribcellFilter(fuel_cell)
 
 # Tally to count the fission rate in the fuel
-tally = openmc.Tally(name='flux')
-tally.filters = [distribcell_filter]
-tally.scores = ['flux']
+
+tally_fuel = openmc.Tally(name='flux_fuel')
+tally_fuel.filters = [distribcell_filter_fuel]
+tally_fuel.scores = ['flux']
 
 # TODO: Create tallys for the flux in the water cells
 
-tallies = openmc.Tallies([tally])
+distribcell_filter_water = openmc.DistribcellFilter(water_cell)
+tally_water = openmc.Tally(name='flux_water')
+tally_water.filters = [distribcell_filter_water]
+tally_water.scores = ['flux']
+
+watercell_filter = openmc.UniverseFilter(w)
+tally_empty = openmc.Tally(name='tally_empty')
+tally_empty.filters = [watercell_filter]
+tally_empty.scores = ['flux']
+
+tallies = openmc.Tallies([tally_fuel,tally_water,tally_empty])
 tallies.export_to_xml()
 
 
@@ -84,9 +95,19 @@ plots.append(plot)
 plots.export_to_xml()
 
 ###############################################################################
-# Create settings for the problem
+# Create settings for the problem and Shannon Entropy Mesh to evaluate the number of inactive batches needed
 
 # TODO: Change the settings file to run an eigenvalue simulation
+
+entropy_mesh = openmc.RegularMesh()
+entropy_mesh.lower_left = (-pitch,-pitch)
+entropy_mesh.upper_right = (pitch,pitch)
+entropy_mesh.dimension = (8, 8)
+
 settings = openmc.Settings()
-settings.run_mode = 'plot'
+settings.batches = 50
+settings.inactive = 22
+settings.particles = 5000
+settings.run_mode = 'eigenvalue'
+settings.entropy_mesh = entropy_mesh
 settings.export_to_xml()
