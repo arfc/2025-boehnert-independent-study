@@ -58,7 +58,7 @@ distribcell_filter_fuel = openmc.DistribcellFilter(fuel_cell)
 
 tally_fuel = openmc.Tally(name='flux_fuel')
 tally_fuel.filters = [distribcell_filter_fuel]
-tally_fuel.scores = ['flux']
+tally_fuel.scores = ['flux', 'nu-fission']
 
 # TODO: Create tallys for the flux in the water cells
 
@@ -105,9 +105,9 @@ entropy_mesh.upper_right = (pitch,pitch)
 entropy_mesh.dimension = (8, 8)
 
 settings = openmc.Settings()
-settings.batches = 50
-settings.inactive = 22
-settings.particles = 5000
+settings.batches = 300 
+settings.inactive = 200
+settings.particles = 10000
 settings.run_mode = 'eigenvalue'
 settings.entropy_mesh = entropy_mesh
 settings.export_to_xml()
