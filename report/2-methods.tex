@@ -3,29 +3,30 @@
 \label{sec:methods}
 The geometry of the lattice structure used in the two simulations is simple, consisting of a 2x2 2D lattice structure, in which three cells contain a fuel pin in a water moderator, the fourth cell containing only the water moderator.
 
-Figure here
+Figure of geometry here
 
 Two methods used to solve for neutron transport in this report are the Monte Carlo method and the Random Ray method. As previously mentioned, the Monte Carlo method run by code from OpenMC solves for transport stochastically, whereas the Random Ray method is a hybrid stochastic-deterministic method.
 
 \pagebreak
 \subsection{Shannon Entropy}
-Two figures of the Shannon Entropy, comparing convergence and discussing the number of active and inactive batches.
-\begin{figure}[h]
-        \centering
-\begin{tikzpicture}[node distance=1.5cm]
-\node (start) [object] {Start};
-\node (step1) [process, below of=start] {Step 1};
-\node (intermediate) [object, below of=step1] {Intermediate};
-\node (step2) [process, below of=intermediate] {Step 2};
-\node (end) [object, below of=step2]{End};
+For k-eigenvalue simulations, the source distribution is not known. As such, the estimate of the source distribution gets closer and closer to the true distribution with each iteration. Once the source distribution has sufficiently converged is when one may begin to collect tallies. This range of batches before beginning to collect tallies are known as the inactive batches. Some geometries only require a small number of batches in order for the source distribution to converge, while other, more complex geometries, require hundreds of inactive batches before the source may converge. The primary method to determine the convergence of the source distribution is the Shannon Entropy diagnostic.
 
-\draw [arrow] (start) -- (step1); 
-\draw [arrow] (step1) -- (intermediate);
-\draw [arrow] (intermediate) -- (step2); 
-\draw [arrow] (step2) -- (end);
-\end{tikzpicture}
-\caption{A caption for the flowchart.}
-\label{fig:comp}
+\begin{figure}[htbp!]
+        \begin{center}
+                \includegraphics[scale=0.75]{../lab_notebook/shannon_entropy_mc.png}
+        \end{center}
+        \caption{Shannon Entropy for the Monte Carlo Simulation.}
+        \label{fig:shannon_entropy_mc}
 \end{figure}
+
+\begin{figure}[htbp!]
+        \begin{center}
+                \includegraphics[scale=0.75]{../lab_notebook/shannon_entropy_rr.png}
+        \end{center}
+        \caption{Shannon Entropy for the Random Ray Simulation.}
+        \label{fig:shannon_entropy_rr}
+\end{figure}
+
+As depicted in the two figures above, both simulations depict a converged source distribution fairly early in the number of batches.For the sake of certainty, both simulations were run with 300 batches with 200 of those batches being inactive. The purpose of such a high number of batches is variance reduction, meaning a more representative data set.
 
 
